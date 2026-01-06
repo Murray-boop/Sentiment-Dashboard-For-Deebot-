@@ -8,7 +8,7 @@ from datetime import datetime
 # 1. Page Configuration & Helper Functions
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="Reddit Listening Dashboard for Deebot",
+    page_title="Reddit Listening Dashboard",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -97,7 +97,18 @@ def load_data(file):
                 df['model'] = None
 
         # Force Brand
-        df['brand'] = 'DEEBOT'
+        if 'brand' in df.columns:
+            # 取非空、非 Unknown 的值
+            brand_series = df['brand'].dropna()
+            brand_series = brand_series[brand_series != 'Unknown']
+
+            if not brand_series.empty:
+                main_brand = brand_series.value_counts().idxmax()
+                df['brand'] = main_brand
+            else:
+                df['brand'] = 'Unknown'
+        else:
+            df['brand'] = 'Unknown'
 
         # --- Date Processing ---
         if 'text_created_utc' in df.columns:
@@ -135,7 +146,7 @@ def load_data(file):
 # -----------------------------------------------------------------------------
 col_title, col_upload = st.columns([3, 1])
 with col_title:
-    st.title("📊 Reddit Listening Dashboard for Deebot")
+    st.title("📊 Reddit Listening Dashboard")
 with col_upload:
     uploaded_file = st.file_uploader("Upload Data File (CSV/Excel)", type=['csv', 'xlsx', 'xls'])
 
