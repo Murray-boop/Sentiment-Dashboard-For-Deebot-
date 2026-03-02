@@ -533,7 +533,7 @@ if uploaded_file is not None:
         with tab_overview:
             # 1. Core Metrics
             m1, m2, m3, m4 = st.columns(4)
-            m1.metric("Total Volume (Posts)", len(filtered_df))
+            m1.metric("Total Volume", len(filtered_df))
 
             # Keep '好评' and '差评' in regex in case the input data uses Chinese tags
             pos_count = len(
@@ -848,3 +848,4 @@ if uploaded_file is not None:
                     st.info("No model data")
 else:
     st.info("👋 Please upload a data file (must include brand, model, sentiment_reason, etc.) in the top right corner.")
+
