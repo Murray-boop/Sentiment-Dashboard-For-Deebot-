@@ -618,14 +618,14 @@ if uploaded_file is not None:
             if user_col and not filtered_df.empty:
                 # 统计频次并取 Top 20
                 user_counts = filtered_df[user_col].value_counts().head(20).reset_index()
-                user_counts.columns = ['User', 'Post Count']
+                user_counts.columns = ['User', 'Activity Count']
 
                 fig_users = px.bar(
                     user_counts,
-                    x='Post Count',
+                    x='Activity Count',
                     y='User',
                     orientation='h',
-                    color='Post Count',
+                    color='Activity Count',
                     color_continuous_scale='Blues'
                 )
                 fig_users.update_layout(yaxis={'categoryorder': 'total ascending'})
@@ -848,4 +848,5 @@ if uploaded_file is not None:
                     st.info("No model data")
 else:
     st.info("👋 Please upload a data file (must include brand, model, sentiment_reason, etc.) in the top right corner.")
+
 
